@@ -3,13 +3,6 @@ const http = require("http");
 // const html = require("fs").readFileSync("./index.html");
 const fs = require("fs");
 
-//webサーバーを作ろう
-// const server = http.createServer((req,res)=>{
-//ブラウザからアクセスがきた時の処理
-//     res.writeHead(200,{"Content-Type":"text/html"});
-//     res.write(html);
-//     res.end();
-// });
 function getType(_url) {
   const types = {
     ".html": "text/html",
@@ -28,9 +21,15 @@ function getType(_url) {
   return "text/plain";
 }
 
+//webサーバーを作ろう
+// const server = http.createServer((req,res)=>{
+//ブラウザからアクセスがきた時の処理
+//     res.writeHead(200,{"Content-Type":"text/html"});
+//     res.write(html);
+//     res.end();
+// });
 const server = http.createServer((req, res) => {
-  const url =
-    "public" + (req.url.endsWith("/") ? req.url + "index.html" : req.url);
+  const url = req.url.endsWith("/") ? req.url + "index.html" : req.url;
   if (fs.existsSync(url)) {
     fs.readFile(url, (err, data) => {
       if (!err) {
@@ -42,8 +41,7 @@ const server = http.createServer((req, res) => {
       }
     });
   } else {
-    // res.statusCode = 404;
-    res.writeHead(200, { "Content-Type": getType(url) });
+    res.statusCode = 404;
     res.end();
   }
 });
