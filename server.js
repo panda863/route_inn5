@@ -1,19 +1,17 @@
-const http = require("http");
-// const PORT = 8000;
-// const html = require("fs").readFileSync("./index.html");
-const fs = require("fs");
+var http = require("http");
+var fs = require("fs");
 
 function getType(_url) {
-  const types = {
+  var types = {
     ".html": "text/html",
     ".css": "text/css",
     ".js": "text/javascript",
+    ".jpg": "image/jpeg",
     ".png": "image/png",
     ".gif": "image/gif",
     ".svg": "image/svg+xml",
-    ".jpg": "image/jpeg",
   };
-  for (const key in types) {
+  for (var key in types) {
     if (_url.endsWith(key)) {
       return types[key];
     }
@@ -21,15 +19,9 @@ function getType(_url) {
   return "text/plain";
 }
 
-//webサーバーを作ろう
-// const server = http.createServer((req,res)=>{
-//ブラウザからアクセスがきた時の処理
-//     res.writeHead(200,{"Content-Type":"text/html"});
-//     res.write(html);
-//     res.end();
-// });
-const server = http.createServer((req, res) => {
-  const url = req.url.endsWith("/") ? req.url + "index.html" : req.url;
+var server = http.createServer((req, res) => {
+  var url =
+    "public" + (req.url.endsWith("/") ? req.url + "index.html" : req.url);
   if (fs.existsSync(url)) {
     fs.readFile(url, (err, data) => {
       if (!err) {
@@ -46,7 +38,7 @@ const server = http.createServer((req, res) => {
   }
 });
 
-const port = process.env.PORT || 8000;
+var port = 8000;
 server.listen(port, () => {
-  console.log(`Listening on port ${port}...`);
+  console.log(`Server listening on ${port}`);
 });
