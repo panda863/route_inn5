@@ -18,6 +18,7 @@ function getType(_url) {
     ".png": "image/png",
     ".gif": "image/gif",
     ".svg": "image/svg+xml",
+    ".jpg": "image/jpeg",
   };
   for (const key in types) {
     if (_url.endsWith(key)) {
