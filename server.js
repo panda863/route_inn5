@@ -42,7 +42,8 @@ const server = http.createServer((req, res) => {
       }
     });
   } else {
-    res.statusCode = 404;
+    // res.statusCode = 404;
+    res.writeHead(200, { "Content-Type": getType(url) });
     res.end();
   }
 });
